@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StyleHub - Fashion & Apparel | WD-EC-002</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<nav class="navbar">
+<div class="container nav-flex">
+<div class="logo"><i class="fa-solid fa-bag-shopping"></i> StyleHub</div>
+<ul class="nav-links" id="navLinks">
+<li><a href="#home">Home</a></li>
+<li><a href="#men">Men</a></li>
+<li><a href="#women">Women</a></li>
+<li><a href="#kids">Kids</a></li>
+<li><a href="#about">About</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
+<div class="nav-icons">
+<button onclick="toggleSearch()"><i class="fa-solid fa-magnifying-glass"></i></button>
+<button onclick="openWishlist()"><i class="fa-regular fa-heart"></i> <span id="wishCount">0</span></button>
+<button onclick="openCart()"><i class="fa-solid fa-cart-shopping"></i> <span id="cartCount">0</span></button>
+<button onclick="openAccount()"><i class="fa-regular fa-user"></i></button>
+</div>
+</div>
+<div class="search-bar" id="searchBar">
+<input type="text" id="searchInput" placeholder="Search dresses, shirts, shoes..." onkeyup="searchProducts()">
+</div>
+</nav>
+
+<section id="home" class="hero">
+<div class="hero-content">
+<span class="badge">NEW SEASON COLLECTION</span>
+<h1>Discover Your<br>Perfect Style</h1>
+<p>Explore the latest fashion trends for every moment and every mood.</p>
+<div class="hero-btns">
+<a href="#products" class="btn-primary">SHOP NOW <i class="fa-solid fa-arrow-right"></i></a>
+<a href="#about" class="btn-secondary">Our Story</a>
+</div>
+</div>
+<div class="hero-image">
+<img src="https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?w=600" alt="fashion">
+<div class="offer-card"><h3>50% OFF</h3><p>On Summer Collection</p></div>
+</div>
+</section>
+
+<section class="categories">
+<h2 class="section-title">Shop By Category</h2>
+<div class="cat-grid">
+<div class="cat-card" onclick="filterCategory('men')"><img src="https://images.unsplash.com/photo-1617137968427-85924c800a22?w=400"><h3>Men's</h3></div>
+<div class="cat-card" onclick="filterCategory('women')"><img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=400"><h3>Women's</h3></div>
+<div class="cat-card" onclick="filterCategory('kids')"><img src="https://images.unsplash.com/photo-1622290291468-a28f7a7dc6a8?w=400"><h3>Kids</h3></div>
+<div class="cat-card" onclick="filterCategory('footwear')"><img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400"><h3>Footwear</h3></div>
+</div>
+</section>
+
+<section id="products" class="products-section">
+<div class="container">
+<div class="filter-bar">
+<div class="filters">
+<button class="filter-btn active" onclick="filterCategory('all')">All</button>
+<button class="filter-btn" onclick="filterCategory('men')">Men</button>
+<button class="filter-btn" onclick="filterCategory('women')">Women</button>
+<button class="filter-btn" onclick="filterCategory('kids')">Kids</button>
+<select id="priceFilter" onchange="applyFilters()"><option value="all">All Prices</option><option value="0-1000">Under ₹1000</option><option value="1000-2000">₹1000-₹2000</option><option value="2000-5000">Above ₹2000</option></select>
+<select id="sizeFilter" onchange="applyFilters()"><option value="all">All Sizes</option><option value="S">S</option><option value="M">M</option><option value="L">L</option><option value="XL">XL</option></select>
+</div>
+</div>
+<div id="productGrid" class="product-grid"></div>
+</div>
+</section>
+
+<!-- Cart Sidebar -->
+<div id="cartSidebar" class="sidebar">
+<div class="sidebar-header"><h3>Cart (<span id="cartCount2">0</span>)</h3><button onclick="closeCart()"><i class="fa-solid fa-xmark"></i></button></div>
+<div id="cartItems" class="cart-items"></div>
+<div class="cart-footer">
+<div class="coupon-box"><input id="couponInput" placeholder="Coupon: STYLE20"><button onclick="applyCoupon()">Apply</button></div>
+<p id="couponMsg"></p>
+<div class="total-row"><span>Subtotal</span><span id="subTotal">₹0</span></div>
+<div class="total-row grand"><span>Total</span><span id="grandTotal">₹0</span></div>
+<button class="btn-primary full" onclick="openCheckout()">Proceed to Checkout</button>
+</div>
+</div>
+
+<!-- Wishlist -->
+<div id="wishSidebar" class="sidebar">
+<div class="sidebar-header"><h3>Wishlist</h3><button onclick="closeWishlist()"><i class="fa-solid fa-xmark"></i></button></div>
+<div id="wishItems" class="cart-items"></div>
+</div>
+
+<!-- Product Modal -->
+<div id="productModal" class="modal">
+<div class="modal-content">
+<span class="close" onclick="closeModal()">&times;</span>
+<div class="modal-flex">
+<img id="modalImg" src="">
+<div>
+<h2 id="modalName"></h2>
+<div class="rating">★★★★☆ (124 reviews)</div>
+<h3 id="modalPrice"></h3>
+<p id="modalDesc"></p>
+<div class="selector"><label>Size:</label><div id="modalSizes"></div></div>
+<div class="selector"><label>Color:</label><div id="modalColors"></div></div>
+<div class="qty-box"><button onclick="changeQty(-1)">-</button><span id="modalQty">1</span><button onclick="changeQty(1)">+</button></div>
+<button class="btn-primary full" onclick="addToCartFromModal()">Add to Cart - <span id="modalTotal"></span></button>
+<button class="btn-secondary full" onclick="addToWishlistFromModal()">♡ Add to Wishlist</button>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Checkout -->
+<div id="checkoutModal" class="modal">
+<div class="modal-content">
+<span class="close" onclick="closeCheckout()">&times;</span>
+<h2>Checkout</h2>
+<div class="checkout-flex">
+<div>
+<h4>Shipping Address</h4>
+<input placeholder="Full Name" id="cName"><input placeholder="Phone" id="cPhone"><input placeholder="Address" id="cAddr"><input placeholder="City, Pincode" id="cCity">
+<h4>Payment: COD / UPI (Simulated)</h4>
+</div>
+<div class="order-summary">
+<h4>Order Summary</h4>
+<div id="checkoutItems"></div>
+<div class="total-row grand"><span>Total</span><span id="checkoutTotal"></span></div>
+<button class="btn-primary full" onclick="placeOrder()">Place Order</button>
+<p id="orderMsg"></p>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Account -->
+<div id="accountModal" class="modal">
+<div class="modal-content small">
+<span class="close" onclick="closeAccount()">&times;</span>
+<div id="loginBox">
+<h2>Login / Register</h2>
+<input id="loginEmail" placeholder="Email"><input id="loginPass" type="password" placeholder="Password"><button class="btn-primary full" onclick="login()">Login (Simulated)</button>
+</div>
+<div id="profileBox" style="display:none">
+<h2>My Account</h2>
+<p><b>Email:</b> <span id="profileEmail"></span></p><h4>Order History</h4><div id="orderHistory">No orders yet</div><button class="btn-secondary" onclick="logout()">Logout</button>
+</div>
+</div>
+</div>
+
+<section id="about" class="about"><div class="container"><h2 class="section-title">Our Story</h2><p>StyleHub started in 2020 with mission to make premium fashion accessible. Inspired by Zara, H&M, ASOS. Sustainable, stylish, affordable. Ships across India.</p></div></section>
+<section id="contact" class="contact"><div class="container"><h2 class="section-title">Contact</h2><p>123 Fashion Street, Chennai - 9600095045 - mail@freeinternships.in</p></div></section>
+<footer><p>© 2026 StyleHub | Task ID: WD-EC-002 | Student Code: DAS-EC-002 | <a href="https://www.freeinternships.in/blog/">Task Link</a></p></footer>
+<script src="script.js"></script>
+</body>
+</html>
