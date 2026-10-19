@@ -4,7 +4,7 @@
 > Data Alcott Internship Project
 
 ### 🔗 Task Link: https://www.freeinternships.in/blog/
-### 🌐 Live Demo: (Netlify link aprom add pannu)
+### 🌐 Live Demo: https://nimble-sunflower-ed229c.netlify.app
 ### 👩‍💻 Developed by: Narmatha R
 
 ---
